@@ -13,9 +13,12 @@ export default function AttendancePage() {
   const fetchAttendanceData = async () => {
     try {
       const myAtts = await apiService.getMyAttendance();
-      const emps = await apiService.getEmployees();
       setAttendance(myAtts);
-      setEmployees(emps);
+      
+      if (user?.role === 'admin') {
+        const emps = await apiService.getEmployees();
+        setEmployees(emps);
+      }
     } catch (err) {
       console.error('Failed to fetch attendance data', err);
     } finally {
@@ -251,62 +254,113 @@ export default function AttendancePage() {
           </div>
         </div>
 
-        {/* Team Monitoring list */}
-        <div className="glass p-6 rounded-3xl">
-          <div className="flex justify-between items-center mb-6">
-            <div>
-              <h3 className="text-xl font-bold text-on-background">Team Monitoring</h3>
-              <p className="text-[13px] text-outline">Live status of your direct reports</p>
+        {/* Team Monitoring list (Admin) or Personal Logs (Employee) */}
+        {user?.role === 'admin' ? (
+          <div className="glass p-6 rounded-3xl">
+            <div className="flex justify-between items-center mb-6">
+              <div>
+                <h3 className="text-xl font-bold text-on-background">Team Monitoring</h3>
+                <p className="text-[13px] text-outline">Live status of your direct reports</p>
+              </div>
+              <span className="bg-primary/10 text-primary border border-primary/20 px-3.5 py-1 rounded-full text-xs font-bold shadow-sm">
+                {employees.filter(e => e.id !== user?.id).length} Active
+              </span>
             </div>
-            <span className="bg-primary/10 text-primary border border-primary/20 px-3.5 py-1 rounded-full text-xs font-bold shadow-sm">
-              12 / 15 Active
-            </span>
-          </div>
 
-          <div className="space-y-3.5 max-h-[360px] overflow-y-auto pr-2 custom-scrollbar">
-            {employees
-              .filter(e => e.id !== user?.id)
-              .map((emp) => {
-                let statusBg = 'bg-green-100/60 text-green-600 border-green-200/40';
-                let statusDot = 'bg-green-500';
-                if (emp.status === 'On Leave') {
-                  statusBg = 'bg-red-100/60 text-red-600 border-red-200/40';
-                  statusDot = 'bg-red-500';
-                } else if (emp.status === 'Remote') {
-                  statusBg = 'bg-purple-100/60 text-purple-600 border-purple-200/40';
-                  statusDot = 'bg-purple-500';
-                } else if (emp.status === 'Out of Office') {
-                  statusBg = 'bg-gray-100/60 text-gray-500 border-gray-200/40';
-                  statusDot = 'bg-gray-400';
-                }
+            <div className="space-y-3.5 max-h-[360px] overflow-y-auto pr-2 custom-scrollbar">
+              {employees
+                .filter(e => e.id !== user?.id)
+                .map((emp) => {
+                  let statusBg = 'bg-green-100/60 text-green-600 border-green-200/40';
+                  let statusDot = 'bg-green-500';
+                  if (emp.status === 'On Leave') {
+                    statusBg = 'bg-red-100/60 text-red-600 border-red-200/40';
+                    statusDot = 'bg-red-500';
+                  } else if (emp.status === 'Remote') {
+                    statusBg = 'bg-purple-100/60 text-purple-600 border-purple-200/40';
+                    statusDot = 'bg-purple-500';
+                  } else if (emp.status === 'Out of Office') {
+                    statusBg = 'bg-gray-100/60 text-gray-500 border-gray-200/40';
+                    statusDot = 'bg-gray-400';
+                  }
 
-                return (
-                  <div key={emp.id} className="flex items-center justify-between p-3.5 rounded-2xl bg-white/40 border border-white/20 hover:bg-white/60 transition-all">
-                    <div className="flex items-center gap-4">
-                      <div className="w-11 h-11 rounded-full overflow-hidden border-2 border-white flex-shrink-0">
-                        <img className="w-full h-full object-cover" src={emp.avatar} alt={emp.name} />
+                  return (
+                    <div key={emp.id} className="flex items-center justify-between p-3.5 rounded-2xl bg-white/40 border border-white/20 hover:bg-white/60 transition-all">
+                      <div className="flex items-center gap-4">
+                        <div className="w-11 h-11 rounded-full overflow-hidden border-2 border-white flex-shrink-0">
+                          <img className="w-full h-full object-cover" src={emp.avatar} alt={emp.name} />
+                        </div>
+                        <div>
+                          <div className="font-bold text-body-md text-on-background">{emp.name}</div>
+                          <div className="text-label-sm text-outline font-medium">{emp.jobTitle}</div>
+                        </div>
                       </div>
-                      <div>
-                        <div className="font-bold text-body-md text-on-background">{emp.name}</div>
-                        <div className="text-label-sm text-outline font-medium">{emp.jobTitle}</div>
+                      
+                      <div className="flex items-center gap-6">
+                        <div className="text-right hidden sm:block">
+                          <div className="text-[10px] text-outline uppercase font-bold tracking-wider">In Time</div>
+                          <div className="text-sm font-bold text-on-background">08:55 AM</div>
+                        </div>
+                        <div className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold border ${statusBg}`}>
+                          <span className={`w-1.5 h-1.5 rounded-full ${statusDot}`}></span>
+                          {emp.status}
+                        </div>
                       </div>
                     </div>
-                    
-                    <div className="flex items-center gap-6">
-                      <div className="text-right hidden sm:block">
-                        <div className="text-[10px] text-outline uppercase font-bold tracking-wider">In Time</div>
-                        <div className="text-sm font-bold text-on-background">08:55 AM</div>
-                      </div>
-                      <div className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold border ${statusBg}`}>
-                        <span className={`w-1.5 h-1.5 rounded-full ${statusDot}`}></span>
-                        {emp.status}
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
+                  );
+                })}
+            </div>
           </div>
-        </div>
+        ) : (
+          <div className="glass p-6 rounded-3xl">
+            <div className="flex justify-between items-center mb-6">
+              <div>
+                <h3 className="text-xl font-bold text-on-background">My Attendance Logs</h3>
+                <p className="text-[13px] text-outline">Your daily clock-in history</p>
+              </div>
+            </div>
+            <div className="overflow-x-auto custom-scrollbar">
+              <table className="w-full text-left border-collapse">
+                <thead>
+                  <tr className="border-b border-black/10 text-[11px] font-bold text-outline uppercase tracking-wider">
+                    <th className="py-3">Date</th>
+                    <th className="py-3">Check In</th>
+                    <th className="py-3">Check Out</th>
+                    <th className="py-3">Status</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-black/5 text-sm font-semibold text-on-surface-variant">
+                  {attendance.length === 0 ? (
+                    <tr>
+                      <td colSpan="4" className="py-8 text-center text-outline font-medium">
+                        No logs recorded yet.
+                      </td>
+                    </tr>
+                  ) : (
+                    attendance.map((att) => (
+                      <tr key={att.id} className="hover:bg-white/30 transition-colors">
+                        <td className="py-3.5 text-on-background">{att.date}</td>
+                        <td className="py-3.5">{att.checkIn || '--'}</td>
+                        <td className="py-3.5">{att.checkOut || '--'}</td>
+                        <td className="py-3.5 capitalize">
+                          <span className={`px-2 py-0.5 rounded-full text-xs font-bold ${
+                            att.status === 'present' 
+                              ? 'bg-green-50 text-green-600 border border-green-200' 
+                              : att.status === 'leave'
+                              ? 'bg-red-50 text-red-600 border border-red-200'
+                              : 'bg-yellow-50 text-yellow-600 border border-yellow-200'
+                          }`}>
+                            {att.status}
+                          </span>
+                        </td>
+                      </tr>
+                    ))
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
 
       </section>
 

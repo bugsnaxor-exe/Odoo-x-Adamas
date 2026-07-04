@@ -313,6 +313,63 @@ export default function LeavePage() {
         </div>
       )}
 
+      {/* Organization Leave History Card (HR Admin view only) */}
+      {user?.role === 'admin' && (
+        <div className="glass p-6 rounded-3xl">
+          <h3 className="text-lg font-bold text-on-background mb-4">Organization Leave History</h3>
+          <div className="overflow-x-auto custom-scrollbar">
+            <table className="w-full text-left border-collapse min-w-[600px]">
+              <thead>
+                <tr className="border-b border-black/10 text-[11px] font-bold text-outline uppercase tracking-wider">
+                  <th className="py-3">Team Member</th>
+                  <th className="py-3">Dates</th>
+                  <th className="py-3">Leave Type</th>
+                  <th className="py-3">Status</th>
+                  <th className="py-3">Reason</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-black/5 text-sm font-semibold text-on-surface-variant">
+                {leaves.filter(l => l.status !== 'pending').length === 0 ? (
+                  <tr>
+                    <td colSpan="5" className="py-8 text-center text-outline font-medium">
+                      No historical requests.
+                    </td>
+                  </tr>
+                ) : (
+                  leaves.filter(l => l.status !== 'pending').map((item) => {
+                    let statusBadge = 'bg-primary-container/10 text-primary border-primary-container/20';
+                    if (item.status === 'approved') {
+                      statusBadge = 'bg-green-50 text-green-600 border-green-100';
+                    } else if (item.status === 'rejected') {
+                      statusBadge = 'bg-red-50 text-red-600 border-red-100';
+                    }
+
+                    return (
+                      <tr key={item.id} className="hover:bg-white/30 transition-colors">
+                        <td className="py-3.5 flex items-center gap-3">
+                          <span className="text-on-background font-bold">{item.employeeName}</span>
+                        </td>
+                        <td className="py-3.5 text-on-background font-bold">
+                          {item.startDate === item.endDate ? item.startDate : `${item.startDate} - ${item.endDate}`}
+                          <span className="block text-[10px] text-outline font-medium mt-0.5">{item.duration}</span>
+                        </td>
+                        <td className="py-3.5 capitalize">{item.leaveType} Leave</td>
+                        <td className="py-3.5">
+                          <span className={`px-2.5 py-0.5 rounded-full text-xs font-bold border capitalize ${statusBadge}`}>
+                            {item.status}
+                          </span>
+                        </td>
+                        <td className="py-3.5 text-outline font-medium">{item.reason || item.description || '--'}</td>
+                      </tr>
+                    );
+                  })
+                )}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
+
       {/* My Leave History Card */}
       <div className="glass p-6 rounded-3xl">
         <h3 className="text-lg font-bold text-on-background mb-4">My Leave History</h3>

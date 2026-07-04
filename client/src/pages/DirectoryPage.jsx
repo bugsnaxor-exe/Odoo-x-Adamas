@@ -1,8 +1,10 @@
 // client/src/pages/DirectoryPage.jsx
 import React, { useState, useEffect } from 'react';
+import { useAuth } from '../context/AuthContext.jsx';
 import { apiService } from '../services/api.js';
 
 export default function DirectoryPage() {
+  const { user } = useAuth();
   const [employees, setEmployees] = useState([]);
   const [filter, setFilter] = useState('All');
   const [loading, setLoading] = useState(true);
@@ -130,12 +132,14 @@ export default function DirectoryPage() {
         </button>
       </div>
 
-      {/* Floating Action Button (FAB) + in Bottom-Right Corner */}
-      <div className="fixed bottom-6 right-6 z-40">
-        <button className="w-12 h-12 rounded-full bg-primary hover:brightness-110 text-white flex items-center justify-center shadow-lg shadow-primary/30 active:scale-95 transition-all">
-          <span className="material-symbols-outlined text-2xl font-bold">add</span>
-        </button>
-      </div>
+      {/* Floating Action Button (FAB) + in Bottom-Right Corner - Admin Only */}
+      {user?.role === 'admin' && (
+        <div className="fixed bottom-6 right-6 z-40">
+          <button className="w-12 h-12 rounded-full bg-primary hover:brightness-110 text-white flex items-center justify-center shadow-lg shadow-primary/30 active:scale-95 transition-all">
+            <span className="material-symbols-outlined text-2xl font-bold">add</span>
+          </button>
+        </div>
+      )}
 
     </main>
   );

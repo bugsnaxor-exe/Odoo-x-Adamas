@@ -14,19 +14,20 @@ router.use(auth);
 // GET / (and /all) — List all employees with profiles
 // Admin only
 // -----------------------------------------
-router.get(['/', '/all'], roleGuard('admin'), (req, res) => {
+router.get(['/', '/all'], (req, res) => {
   try {
-    const employees = db.prepare(`
+    const isAdmin = req.user.role === 'admin';
+    const sql = `
       SELECT
         u.id, u.email, u.role, u.created_at,
         p.first_name, p.last_name, p.phone, p.address,
         p.department, p.job_title, p.date_of_joining,
-        p.profile_picture,
-        (SELECT basic_salary FROM payroll WHERE user_id = u.id ORDER BY month DESC LIMIT 1) AS salary
+        p.profile_picture
+        ${isAdmin ? ', (SELECT basic_salary FROM payroll WHERE user_id = u.id ORDER BY month DESC LIMIT 1) AS salary' : ''}
       FROM users u
       LEFT JOIN profiles p ON u.id = p.user_id
-    `).all();
-
+    `;
+    const employees = db.prepare(sql).all();
     res.json(employees);
   } catch (err) {
     console.error('Error fetching all profiles:', err.message);
