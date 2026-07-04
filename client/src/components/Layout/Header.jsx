@@ -27,20 +27,17 @@ export default function Header() {
   ];
 
   return (
-    <nav className="fixed top-4 left-4 right-4 z-50 max-w-7xl mx-auto glass-navbar rounded-full px-6 py-2.5 flex items-center justify-between transition-all duration-300">
+    <nav className="fixed top-4 left-0 right-0 z-50 mx-auto glass-navbar rounded-full px-8 h-16 flex items-center justify-between transition-all duration-300 w-full max-w-fit shadow-[0px_20px_40px_rgba(0,0,0,0.05)] gap-8">
       
       {/* Brand Logo */}
       <div className="flex items-center gap-2 cursor-pointer" onClick={() => navigate(isAdmin ? '/dashboard' : '/attendance')}>
-        <span className="material-symbols-outlined text-[26px] text-primary" style={{ fontVariationSettings: "'FILL' 1" }}>
-          hub
-        </span>
         <span className="font-headline-md text-xl font-extrabold text-primary tracking-tight">
           PeopleHub
         </span>
       </div>
 
       {/* Navigation Links (Horizontal Menu) */}
-      <div className="hidden md:flex items-center gap-8 font-semibold text-[15px]">
+      <div className="hidden md:flex items-center gap-6 font-semibold text-[15px]">
         {menuItems.map((item) => {
           const isActive = location.pathname === item.path;
           return (
@@ -53,7 +50,7 @@ export default function Header() {
             >
               {item.label}
               {isActive && (
-                <span className="absolute bottom-[-6px] left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-primary rounded-full animate-pulse"></span>
+                <span className="absolute bottom-[-6px] left-1/2 -translate-x-1/2 w-1 h-1 bg-primary rounded-full animate-pulse shadow-[0_0_8px_#0058bc]"></span>
               )}
             </NavLink>
           );
@@ -62,26 +59,12 @@ export default function Header() {
 
       {/* Right-side Controls: Search, Notifications, Avatar */}
       <div className="flex items-center gap-4 relative">
-        {/* Search Input pill */}
-        <div className="relative hidden sm:block">
-          <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[18px]">
-            search
-          </span>
-          <input
-            type="text"
-            placeholder="Search..."
-            className="bg-white/30 hover:bg-white/50 focus:bg-white/60 border border-white/20 focus:border-primary rounded-full py-1.5 pl-9 pr-4 text-sm placeholder-on-surface-variant/60 outline-none w-40 focus:w-48 transition-all"
-          />
-        </div>
-
-        {/* Search button for small screens */}
-        <button className="sm:hidden text-on-surface-variant hover:text-primary flex items-center justify-center p-1.5 rounded-full hover:bg-white/30 transition-all">
+        <button className="text-on-surface-variant hover:text-primary flex items-center justify-center p-1.5 rounded-full hover:bg-white/30 transition-all">
           <span className="material-symbols-outlined text-[20px]">search</span>
         </button>
 
         <button className="text-on-surface-variant hover:text-primary flex items-center justify-center p-1.5 rounded-full hover:bg-white/30 transition-all relative">
           <span className="material-symbols-outlined text-[20px]">notifications</span>
-          <span className="absolute top-1 right-1 w-2 h-2 bg-tertiary rounded-full"></span>
         </button>
 
         {/* User Menu Dropdown */}
