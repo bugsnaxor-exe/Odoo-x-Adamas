@@ -2,10 +2,13 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext.jsx';
 import { apiService } from '../services/api.js';
+import { useNavigate } from 'react-router-dom';
 
 export default function DashboardPage() {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
   const [employees, setEmployees] = useState([]);
+  const [previewUser, setPreviewUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -30,15 +33,161 @@ export default function DashboardPage() {
     );
   }
 
-  // Welcome name default to Elena if not loaded
+  const isAdmin = user?.role === 'admin';
   const firstName = user?.name ? user.name.split(' ')[0] : 'Elena';
+
+  // --- 1. EMPLOYEE DASHBOARD PORTAL (3.2.1) ---
+  if (!isAdmin) {
+    return (
+      <div className="space-y-6 fade-in-up">
+        {/* Welcome Header */}
+        <header className="mb-4">
+          <h1 className="text-3xl font-extrabold text-primary tracking-tight">Morning, {firstName}</h1>
+          <p className="text-[14px] text-on-surface-variant/80 mt-0.5">Welcome to your PeopleHub portal dashboard.</p>
+        </header>
+
+        {/* 4 Quick Access Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {/* Profile Card */}
+          <div className="glass p-6 rounded-3xl flex flex-col justify-between hover:scale-[1.02] transition-all duration-300">
+            <div>
+              <div className="w-11 h-11 rounded-2xl bg-primary/10 flex items-center justify-center text-primary mb-4">
+                <span className="material-symbols-outlined text-[22px]">person</span>
+              </div>
+              <h3 className="font-bold text-lg text-on-background">My Profile</h3>
+              <p className="text-xs text-on-surface-variant mt-2 truncate font-semibold">
+                {user?.jobTitle} • {user?.department}
+              </p>
+            </div>
+            <button 
+              onClick={() => navigate('/profile')}
+              className="mt-6 w-full py-2 bg-primary/10 hover:bg-primary/20 text-primary rounded-2xl text-xs font-bold transition-all"
+            >
+              View Settings
+            </button>
+          </div>
+
+          {/* Attendance Card */}
+          <div className="glass p-6 rounded-3xl flex flex-col justify-between hover:scale-[1.02] transition-all duration-300">
+            <div>
+              <div className="w-11 h-11 rounded-2xl bg-secondary-container/15 flex items-center justify-center text-secondary mb-4">
+                <span className="material-symbols-outlined text-[22px]">fingerprint</span>
+              </div>
+              <h3 className="font-bold text-lg text-on-background">My Attendance</h3>
+              <p className="text-xs text-on-surface-variant mt-2 font-semibold">
+                Daily Check-In & Calendar logs
+              </p>
+            </div>
+            <button 
+              onClick={() => navigate('/attendance')}
+              className="mt-6 w-full py-2 bg-secondary-container/15 hover:bg-secondary-container/25 text-secondary rounded-2xl text-xs font-bold transition-all"
+            >
+              Go to Tracker
+            </button>
+          </div>
+
+          {/* Leave Card */}
+          <div className="glass p-6 rounded-3xl flex flex-col justify-between hover:scale-[1.02] transition-all duration-300">
+            <div>
+              <div className="w-11 h-11 rounded-2xl bg-primary-container/10 flex items-center justify-center text-primary mb-4">
+                <span className="material-symbols-outlined text-[22px]">beach_access</span>
+              </div>
+              <h3 className="font-bold text-lg text-on-background">Leave Requests</h3>
+              <p className="text-xs text-on-surface-variant mt-2 font-semibold">
+                14 Days Annual Leave Balance
+              </p>
+            </div>
+            <button 
+              onClick={() => navigate('/leave')}
+              className="mt-6 w-full py-2 bg-primary-container/15 hover:bg-primary-container/25 text-primary rounded-2xl text-xs font-bold transition-all"
+            >
+              Request Leave
+            </button>
+          </div>
+
+          {/* Logout Card */}
+          <div className="glass p-6 rounded-3xl flex flex-col justify-between hover:scale-[1.02] transition-all duration-300">
+            <div>
+              <div className="w-11 h-11 rounded-2xl bg-red-100/60 flex items-center justify-center text-red-500 mb-4">
+                <span className="material-symbols-outlined text-[22px]">logout</span>
+              </div>
+              <h3 className="font-bold text-lg text-on-background">Secure Logout</h3>
+              <p className="text-xs text-on-surface-variant mt-2 font-semibold">
+                Safely end your session
+              </p>
+            </div>
+            <button 
+              onClick={() => { logout(); navigate('/login'); }}
+              className="mt-6 w-full py-2 bg-red-100/60 hover:bg-red-200/60 text-red-500 rounded-2xl text-xs font-bold transition-all"
+            >
+              Logout
+            </button>
+          </div>
+        </div>
+
+        {/* Activity & Alerts Feed */}
+        <div className="glass p-6 rounded-3xl">
+          <h3 className="text-lg font-bold text-on-background mb-4">Recent Activity & Alerts</h3>
+          <div className="space-y-4">
+            <div className="flex items-center gap-3.5 p-3 rounded-2xl bg-white/40 border border-white/20 hover:bg-white/60 transition-all">
+              <span className="material-symbols-outlined text-primary text-[20px]">notifications_active</span>
+              <div>
+                <p className="text-xs font-bold text-on-background">System Alert: September payroll cycle ends in 6 days.</p>
+                <p className="text-[10px] text-outline mt-0.5">Please review your financial details before Sep 25.</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-3.5 p-3 rounded-2xl bg-white/40 border border-white/20 hover:bg-white/60 transition-all">
+              <span className="material-symbols-outlined text-green-500 text-[20px]">verified</span>
+              <div>
+                <p className="text-xs font-bold text-on-background">Leave Approved: Sick Leave for Oct 05 approved by Elena Rodriguez.</p>
+                <p className="text-[10px] text-outline mt-0.5">Approved on Oct 05, 2024.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    );
+  }
+
+  // --- 2. ADMIN DASHBOARD WITH SWITCHER PREVIEW (3.2.2) ---
+  const activeUser = previewUser || user;
 
   return (
     <div className="space-y-6 fade-in-up">
-      {/* Welcome Header */}
-      <header className="mb-4">
-        <h1 className="text-3xl font-extrabold text-primary tracking-tight">Morning, {firstName}</h1>
-        <p className="text-[14px] text-on-surface-variant/80 mt-0.5">Your organization is thriving today. Here's your snapshot.</p>
+      {/* Welcome Header with Employee Switcher */}
+      <header className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
+        <div>
+          <h1 className="text-3xl font-extrabold text-primary tracking-tight">
+            Morning, {firstName}
+          </h1>
+          <p className="text-[14px] text-on-surface-variant/80 mt-0.5">
+            {previewUser 
+              ? `Previewing portal details for employee: ${previewUser.name}` 
+              : "Your organization is thriving today. Here's your snapshot."}
+          </p>
+        </div>
+
+        {/* Dropdown Employee Switcher */}
+        <div className="flex items-center gap-3 border border-white/20 bg-white/20 backdrop-blur-md rounded-full px-4 py-1.5 shadow-sm">
+          <span className="text-[11px] text-outline font-bold uppercase tracking-wider">Switch Employee:</span>
+          <select
+            value={previewUser?.id || ''}
+            onChange={(e) => {
+              const val = parseInt(e.target.value);
+              const found = employees.find(emp => emp.id === val);
+              setPreviewUser(found || null);
+            }}
+            className="bg-transparent border-none py-0.5 px-2 text-xs font-bold text-primary focus:ring-0 cursor-pointer outline-none transition-all"
+          >
+            <option value="">Admin (Elena)</option>
+            {employees
+              .filter(emp => emp.role !== 'admin')
+              .map(emp => (
+                <option key={emp.id} value={emp.id}>{emp.name}</option>
+              ))}
+          </select>
+        </div>
       </header>
 
       {/* Bento Grid */}
@@ -84,22 +233,38 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        {/* Quick Action: New Hire (4 Col) */}
+        {/* Quick Action: New Hire / Switcher Details Card (4 Col) */}
         <div className="col-span-12 lg:col-span-4 glass-panel p-6 rounded-3xl flex flex-col justify-between group overflow-hidden relative">
           <div className="absolute -top-12 -right-12 w-32 h-32 bg-secondary/10 rounded-full blur-2xl group-hover:bg-secondary/20 transition-all duration-700"></div>
-          <div>
-            <div className="w-12 h-12 rounded-2xl bg-secondary-container/20 flex items-center justify-center text-secondary mb-4">
-              <span className="material-symbols-outlined text-[24px]" style={{ fontVariationSettings: "'FILL' 1" }}>
-                person_add
-              </span>
+          {previewUser ? (
+            <div>
+              <div className="w-12 h-12 rounded-2xl overflow-hidden mb-4 border-2 border-white">
+                <img className="w-full h-full object-cover" src={previewUser.avatar} alt={previewUser.name} />
+              </div>
+              <h3 className="text-xl font-bold text-primary-container">{previewUser.name}</h3>
+              <p className="text-xs text-outline uppercase font-bold mt-1">{previewUser.jobTitle}</p>
+              <div className="mt-4 space-y-2 text-xs font-semibold text-on-surface-variant">
+                <div>Department: {previewUser.department}</div>
+                <div>Status: {previewUser.status}</div>
+                <div>Base Salary: ₹{previewUser.salary.toLocaleString('en-IN')}/mo</div>
+              </div>
             </div>
-            <h3 className="text-xl font-bold text-primary-container">New Hire</h3>
-            <p className="text-[13px] text-on-surface-variant mt-2 leading-relaxed">
-              Launch the onboarding workflow for a new teammate.
-            </p>
-          </div>
+          ) : (
+            <div>
+              <div className="w-12 h-12 rounded-xl bg-secondary-container/20 flex items-center justify-center text-secondary mb-4">
+                <span className="material-symbols-outlined text-[24px]" style={{ fontVariationSettings: "'FILL' 1" }}>
+                  person_add
+                </span>
+              </div>
+              <h3 className="text-xl font-bold text-primary-container">New Hire</h3>
+              <p className="text-[13px] text-on-surface-variant mt-2 leading-relaxed">
+                Launch the onboarding workflow for a new teammate.
+              </p>
+            </div>
+          )}
+          
           <button className="mt-8 w-full bg-primary text-white py-3 rounded-full font-bold text-xs flex items-center justify-center gap-2 hover:brightness-110 active:scale-95 transition-all shadow-md shadow-primary/10">
-            Start Onboarding
+            {previewUser ? 'Manage Employee Profile' : 'Start Onboarding'}
             <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
           </button>
         </div>
@@ -143,7 +308,7 @@ export default function DashboardPage() {
           </button>
         </div>
 
-        {/* Payroll Summary (8 Col) - Formatted to INR Rupees */}
+        {/* Payroll Summary (8 Col) */}
         <div className="col-span-12 lg:col-span-8 glass-panel p-6 rounded-3xl flex flex-col justify-between">
           <div className="flex justify-between items-center mb-6">
             <h3 className="text-lg font-bold text-on-background">Payroll Summary</h3>

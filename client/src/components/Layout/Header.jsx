@@ -48,7 +48,7 @@ export default function Header() {
   const isAdmin = user?.role === 'admin';
 
   const menuItems = [
-    ...(isAdmin ? [{ path: '/dashboard', label: 'Dashboard' }] : []),
+    { path: '/dashboard', label: 'Dashboard' },
     { path: '/directory', label: 'Directory' },
     { path: '/attendance', label: 'Attendance' },
     { path: '/leave', label: 'Leave' },
@@ -60,7 +60,7 @@ export default function Header() {
     <nav className="fixed top-4 left-0 right-0 z-50 mx-auto glass-navbar rounded-full px-8 h-16 flex items-center justify-between transition-all duration-300 w-full max-w-fit shadow-[0px_20px_40px_rgba(0,0,0,0.05)] gap-8">
       
       {/* Brand Logo */}
-      <div className="flex items-center gap-2 cursor-pointer" onClick={() => navigate(isAdmin ? '/dashboard' : '/attendance')}>
+      <div className="flex items-center gap-2 cursor-pointer" onClick={() => navigate('/dashboard')}>
         <span className="font-headline-md text-xl font-extrabold text-primary tracking-tight">
           PeopleHub
         </span>

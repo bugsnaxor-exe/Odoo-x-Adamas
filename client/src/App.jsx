@@ -32,15 +32,7 @@ export default function App() {
               </ProtectedRoute>
             }
           >
-            {/* Admin only route */}
-            <Route 
-              path="/dashboard" 
-              element={
-                <ProtectedRoute requireAdmin={true}>
-                  <DashboardPage />
-                </ProtectedRoute>
-              } 
-            />
+            <Route path="/dashboard" element={<DashboardPage />} />
             
             {/* General employee and admin routes */}
             <Route path="/directory" element={<DirectoryPage />} />
