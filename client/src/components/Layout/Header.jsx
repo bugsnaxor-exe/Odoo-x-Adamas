@@ -1,5 +1,5 @@
 // client/src/components/Layout/Header.jsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext.jsx';
 
@@ -8,6 +8,36 @@ export default function Header() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+  const [darkMode, setDarkMode] = useState(
+    document.documentElement.classList.contains('dark')
+  );
+
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+      document.documentElement.classList.remove('light');
+      setDarkMode(true);
+    } else {
+      document.documentElement.classList.add('light');
+      document.documentElement.classList.remove('dark');
+      setDarkMode(false);
+    }
+  }, []);
+
+  const toggleDarkMode = () => {
+    if (document.documentElement.classList.contains('dark')) {
+      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.add('light');
+      localStorage.setItem('theme', 'light');
+      setDarkMode(false);
+    } else {
+      document.documentElement.classList.remove('light');
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+      setDarkMode(true);
+    }
+  };
 
   const handleLogoutClick = () => {
     logout();
@@ -65,6 +95,16 @@ export default function Header() {
 
         <button className="text-on-surface-variant hover:text-primary flex items-center justify-center p-1.5 rounded-full hover:bg-white/30 transition-all relative">
           <span className="material-symbols-outlined text-[20px]">notifications</span>
+        </button>
+
+        <button 
+          onClick={toggleDarkMode}
+          className="text-on-surface-variant hover:text-primary flex items-center justify-center p-1.5 rounded-full hover:bg-white/30 transition-all"
+          title={darkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+        >
+          <span className="material-symbols-outlined text-[20px]">
+            {darkMode ? 'light_mode' : 'dark_mode'}
+          </span>
         </button>
 
         {/* User Menu Dropdown */}
