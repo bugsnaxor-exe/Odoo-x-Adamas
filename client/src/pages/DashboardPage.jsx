@@ -35,7 +35,7 @@ export default function DashboardPage() {
   }
 
   const isAdmin = user?.role === 'admin';
-  const firstName = user?.name ? user.name.split(' ')[0] : 'Elena';
+  const firstName = user?.name ? user.name.split(' ')[0] : 'Riju';
 
   // --- 1. EMPLOYEE DASHBOARD PORTAL (3.2.1) ---
   if (!isAdmin) {
@@ -140,8 +140,8 @@ export default function DashboardPage() {
             <div className="flex items-center gap-3.5 p-3 rounded-2xl bg-white/40 border border-white/20 hover:bg-white/60 transition-all">
               <span className="material-symbols-outlined text-green-500 text-[20px]">verified</span>
               <div>
-                <p className="text-xs font-bold text-on-background">Leave Approved: Sick Leave for Oct 05 approved by Elena Rodriguez.</p>
-                <p className="text-[10px] text-outline mt-0.5">Approved on Oct 05, 2024.</p>
+                <p className="text-xs font-bold text-on-background">Leave Approved: Sick Leave approved by Riju Dasgupta.</p>
+                <p className="text-[10px] text-outline mt-0.5">Approved recently.</p>
               </div>
             </div>
           </div>
@@ -176,7 +176,7 @@ export default function DashboardPage() {
             className="flex items-center gap-2 border border-white/30 bg-white/20 backdrop-blur-md rounded-full px-4 py-2 shadow-sm text-xs font-bold text-primary hover:bg-white/30 transition-all outline-none"
           >
             <span className="text-[10px] text-outline uppercase tracking-wider font-bold">Switch Employee:</span>
-            <span>{previewUser ? previewUser.name : 'Admin (Elena)'}</span>
+            <span>{previewUser ? previewUser.name : 'Admin (Riju)'}</span>
             <span 
               className="material-symbols-outlined text-[16px] transition-transform duration-300 select-none" 
               style={{ transform: switcherOpen ? 'rotate(180deg)' : 'none' }}
@@ -197,7 +197,7 @@ export default function DashboardPage() {
                   className="w-full text-left px-3 py-2 hover:bg-primary/10 rounded-xl transition-all text-xs font-bold text-on-background flex items-center gap-2"
                 >
                   <span className="material-symbols-outlined text-[16px] text-outline">admin_panel_settings</span>
-                  Admin (Elena)
+                  Admin (Riju)
                 </button>
                 {employees
                   .filter(emp => emp.role !== 'admin')
@@ -311,7 +311,7 @@ export default function DashboardPage() {
                   <span className="material-symbols-outlined text-[18px]">event_available</span>
                 </div>
                 <div>
-                  <p className="text-xs font-bold text-on-surface">Sarah J. approved leave</p>
+                  <p className="text-xs font-bold text-on-surface">Riju D. approved leave</p>
                   <p className="text-[10px] text-outline mt-0.5">2 minutes ago</p>
                 </div>
               </div>
@@ -329,7 +329,7 @@ export default function DashboardPage() {
                   <span className="material-symbols-outlined text-[18px]">person_check</span>
                 </div>
                 <div>
-                  <p className="text-xs font-bold text-on-surface">James Wilson joined</p>
+                  <p className="text-xs font-bold text-on-surface">Swastick Saha joined</p>
                   <p className="text-[10px] text-outline mt-0.5">2 hours ago</p>
                 </div>
               </div>

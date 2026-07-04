@@ -74,7 +74,7 @@ export default function LoginPage() {
                 type="email"
                 value={email}
                 onChange={(e) => { setEmail(e.target.value); setError(''); }}
-                placeholder="Enter admin@peoplehub.com or sarah@peoplehub.com"
+                placeholder="Enter sayantan05072004@gmail.com or ankushbiswas2704@gmail.com"
                 className="w-full bg-white/20 hover:bg-white/40 focus:bg-white/50 border border-white/30 focus:border-primary rounded-2xl py-3 pl-12 pr-4 text-body-md placeholder-outline outline-none transition-all"
               />
             </div>
@@ -123,23 +123,23 @@ export default function LoginPage() {
         {/* Quick Logins */}
         <div className="grid grid-cols-2 gap-4">
           <button
-            onClick={() => handleQuickLogin('elena.rodriguez@peoplehub.com')}
+            onClick={() => handleQuickLogin('sayantan05072004@gmail.com')}
             className="flex flex-col items-center p-4 bg-white/30 border border-white/20 rounded-2xl hover:bg-white/50 transition-all text-center group"
           >
             <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-white mb-2 group-hover:scale-105 transition-all">
-              <img className="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCJEPQOhs6hx6nWexvdHp2DyhpUIyi6F_JsG89EOgp9TF6OajZiSN_MsXrv-9uTZNdXhWAbI7WL4eC5Jnyo4Wj0-7yOrVmTU5PptDjIh1siUhvnlJJrmyX1aFQEBtolLqMC7si5sFYgTAIccx9CuT-IEJgbOt-6iDBVWoIGQyl88NfFb3Q-6FDrS6iOMzl6ZV2Mfqcn7sl7lIgl_wAFkJmWRLrHITQJvr7YHTy45EpJCNwL7wgczDnmDA" alt="Elena" />
+              <img className="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCJEPQOhs6hx6nWexvdHp2DyhpUIyi6F_JsG89EOgp9TF6OajZiSN_MsXrv-9uTZNdXhWAbI7WL4eC5Jnyo4Wj0-7yOrVmTU5PptDjIh1siUhvnlJJrmyX1aFQEBtolLqMC7si5sFYgTAIccx9CuT-IEJgbOt-6iDBVWoIGQyl88NfFb3Q-6FDrS6iOMzl6ZV2Mfqcn7sl7lIgl_wAFkJmWRLrHITQJvr7YHTy45EpJCNwL7wgczDnmDA" alt="Riju" />
             </div>
-            <span className="text-label-sm font-bold text-primary">Elena (HR Admin)</span>
+            <span className="text-label-sm font-bold text-primary">Riju (HR Admin)</span>
           </button>
 
           <button
-            onClick={() => handleQuickLogin('sarah.jenkins@peoplehub.com')}
+            onClick={() => handleQuickLogin('ankushbiswas2704@gmail.com')}
             className="flex flex-col items-center p-4 bg-white/30 border border-white/20 rounded-2xl hover:bg-white/50 transition-all text-center group"
           >
             <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-white mb-2 group-hover:scale-105 transition-all">
-              <img className="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBUmad-dVuwzDgqEj-xknLKG3lZmQBS7zcsHxVnMEDCX21eMvFGc0vr0jLppvsGuHZpmajKPjCCnxLed-MGkwTkjY15XMhNf1jqH8IWI0ayddA3Hi2e7AsQ1JsyiQTWdraE96bY-ti4qUXFmwOrMPpEb8tXOG8a6PlBjd-q7LJLi4m2R4JITqjcFjZn2KJuJGVREKjkUwXpnVkUatahUL22QkWFs2AObF50ytRrVoigVN7xwg-ZrE9IlQ" alt="Sarah" />
+              <img className="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBUmad-dVuwzDgqEj-xknLKG3lZmQBS7zcsHxVnMEDCX21eMvFGc0vr0jLppvsGuHZpmajKPjCCnxLed-MGkwTkjY15XMhNf1jqH8IWI0ayddA3Hi2e7AsQ1JsyiQTWdraE96bY-ti4qUXFmwOrMPpEb8tXOG8a6PlBjd-q7LJLi4m2R4JITqjcFjZn2KJuJGVREKjkUwXpnVkUatahUL22QkWFs2AObF50ytRrVoigVN7xwg-ZrE9IlQ" alt="Ankush" />
             </div>
-            <span className="text-label-sm font-bold text-primary">Sarah (Employee)</span>
+            <span className="text-label-sm font-bold text-primary">Ankush (Employee)</span>
           </button>
         </div>
       </div>

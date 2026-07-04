@@ -76,47 +76,32 @@ const INITIAL_EMPLOYEES = [
 const INITIAL_LEAVES = [
   {
     id: 1,
-    userId: 2, // Sarah Jenkins (users.id)
-    employeeId: 'EMP002',
-    employeeName: 'Sarah Jenkins',
+    userId: 2, // Ankush Biswas (users.id)
+    employeeId: 'EMP001',
+    employeeName: 'Ankush Biswas',
     employeeAvatar: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBUmad-dVuwzDgqEj-xknLKG3lZmQBS7zcsHxVnMEDCX21eMvFGc0vr0jLppvsGuHZpmajKPjCCnxLed-MGkwTkjY15XMhNf1jqH8IWI0ayddA3Hi2e7AsQ1JsyiQTWdraE96bY-ti4qUXFmwOrMPpEb8tXOG8a6PlBjd-q7LJLi4m2R4JITqjcFjZn2KJuJGVREKjkUwXpnVkUatahUL22QkWFs2AObF50ytRrVoigVN7xwg-ZrE9IlQ',
     leaveType: 'sick',
-    startDate: '2024-10-05',
-    endDate: '2024-10-05',
-    duration: '1 Day',
+    startDate: '2026-07-10',
+    endDate: '2026-07-12',
+    duration: '2 Days',
     status: 'approved',
     reason: 'Medical checkup',
-    submittedOn: 'Oct 05, 2024',
-    reviewedBy: 'Emma Wilson'
+    submittedOn: 'Jul 10, 2026',
+    reviewedBy: 'Riju Dasgupta'
   },
   {
     id: 2,
-    userId: 6, // Marcus Thorne
-    employeeId: 'EMP006',
-    employeeName: 'Marcus Thorne',
-    employeeAvatar: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDJc1vHCH_qwShEpevCZ_7ePKL6vu6Ps4CI43PKSq1MNfUO_uDUKmH-Q9oxjwSfnb0pz9OdQbOabsTmrya-049X5BZLJU28Lp-zbhJ8J4veoD1vTvtMauf-EG5ac-JRuy21piLghrswf9IFD33FvrnA-Vwhro71OH2eIaB0-R9zHtIHdyS_7E52rworTHpBqPbxa2LEgnOV15s6DETcDGcM-GHMn410eL55KNE1vwrj8IAbtjhU85jodg',
+    userId: 3, // Sayantan Dasgupta
+    employeeId: 'EMP002',
+    employeeName: 'Sayantan Dasgupta',
+    employeeAvatar: 'https://lh3.googleusercontent.com/aida-public/AB6AXuALK4y8BNUgJWG6L2ou9mR3rS3Q8yJZloruZ3qZL8BI29e7B2VwUdTu11LS1RZfaEZFkadtNb2Lb_vsm5gW0sdeiTO-Xp9gXgX47cveo7Qg3pSpz0tLFAgVsf4p2uFGOd0J_wjfcw2T3tC_04BI_ouG86AZFXHJaS01OFl70mV3mWLGTVepJ0xB-MXMQfjV0P5Rr4Yu61MehznnVYD9XER1-rh9ux31XJ3uIlZS9CLzGf33RVREvYkeYQ',
     leaveType: 'paid',
-    startDate: '2024-10-12',
-    endDate: '2024-10-16',
+    startDate: '2026-07-15',
+    endDate: '2026-07-20',
     duration: '5 Days',
     status: 'pending',
     reason: 'Family trip',
-    submittedOn: 'Oct 01, 2024',
-    reviewedBy: 'Waiting...'
-  },
-  {
-    id: 3,
-    userId: 2, // Sarah Jenkins
-    employeeId: 'EMP002',
-    employeeName: 'Sarah Jenkins',
-    employeeAvatar: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBUmad-dVuwzDgqEj-xknLKG3lZmQBS7zcsHxVnMEDCX21eMvFGc0vr0jLppvsGuHZpmajKPjCCnxLed-MGkwTkjY15XMhNf1jqH8IWI0ayddA3Hi2e7AsQ1JsyiQTWdraE96bY-ti4qUXFmwOrMPpEb8tXOG8a6PlBjd-q7LJLi4m2R4JITqjcFjZn2KJuJGVREKjkUwXpnVkUatahUL22QkWFs2AObF50ytRrVoigVN7xwg-ZrE9IlQ',
-    leaveType: 'paid',
-    startDate: '2024-10-20',
-    endDate: '2024-10-25',
-    duration: '6 Days',
-    status: 'pending',
-    reason: 'Personal affairs',
-    submittedOn: 'Oct 15, 2024',
+    submittedOn: 'Jul 11, 2026',
     reviewedBy: 'Waiting...'
   }
 ];
@@ -124,9 +109,9 @@ const INITIAL_LEAVES = [
 const INITIAL_ATTENDANCE = [
   {
     id: 1,
-    userId: 2, // Sarah Jenkins
-    employeeId: 'EMP002',
-    date: '2024-10-23',
+    userId: 2, // Ankush Biswas
+    employeeId: 'EMP001',
+    date: '2026-07-04',
     checkIn: '09:05 AM',
     checkOut: '06:15 PM',
     status: 'present'
