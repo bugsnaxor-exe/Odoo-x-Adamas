@@ -69,7 +69,7 @@ export default function AttendancePage() {
   const todayRecord = attendance.find(a => a.date === todayStr);
   const isCheckedIn = todayRecord && !todayRecord.checkOut;
 
-  // Calendar render matching Image 1 (October 2024 mockup calendar)
+  // Render calendar grid for October 2024
   const renderCalendar = () => {
     const days = [];
     // October 2024 starts on Tuesday (index 1 in 0-indexed week starting Mon)
