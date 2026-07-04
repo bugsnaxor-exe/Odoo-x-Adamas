@@ -9,6 +9,7 @@ export default function DashboardPage() {
   const navigate = useNavigate();
   const [employees, setEmployees] = useState([]);
   const [previewUser, setPreviewUser] = useState(null);
+  const [switcherOpen, setSwitcherOpen] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -168,25 +169,56 @@ export default function DashboardPage() {
           </p>
         </div>
 
-        {/* Dropdown Employee Switcher */}
-        <div className="flex items-center gap-3 border border-white/20 bg-white/20 backdrop-blur-md rounded-full px-4 py-1.5 shadow-sm">
-          <span className="text-[11px] text-outline font-bold uppercase tracking-wider">Switch Employee:</span>
-          <select
-            value={previewUser?.id || ''}
-            onChange={(e) => {
-              const val = parseInt(e.target.value);
-              const found = employees.find(emp => emp.id === val);
-              setPreviewUser(found || null);
-            }}
-            className="bg-transparent border-none py-0.5 px-2 text-xs font-bold text-primary focus:ring-0 cursor-pointer outline-none transition-all"
+        {/* Custom Employee Switcher Dropdown */}
+        <div className="relative">
+          <button 
+            onClick={() => setSwitcherOpen(!switcherOpen)}
+            className="flex items-center gap-2 border border-white/30 bg-white/20 backdrop-blur-md rounded-full px-4 py-2 shadow-sm text-xs font-bold text-primary hover:bg-white/30 transition-all outline-none"
           >
-            <option value="">Admin (Elena)</option>
-            {employees
-              .filter(emp => emp.role !== 'admin')
-              .map(emp => (
-                <option key={emp.id} value={emp.id}>{emp.name}</option>
-              ))}
-          </select>
+            <span className="text-[10px] text-outline uppercase tracking-wider font-bold">Switch Employee:</span>
+            <span>{previewUser ? previewUser.name : 'Admin (Elena)'}</span>
+            <span 
+              className="material-symbols-outlined text-[16px] transition-transform duration-300 select-none" 
+              style={{ transform: switcherOpen ? 'rotate(180deg)' : 'none' }}
+            >
+              keyboard_arrow_down
+            </span>
+          </button>
+
+          {switcherOpen && (
+            <>
+              <div className="fixed inset-0 z-40" onClick={() => setSwitcherOpen(false)}></div>
+              <div className="absolute right-0 mt-2 w-56 rounded-2xl glass-panel shadow-lg border border-white/30 p-2 z-50 animate-fade-in-up max-h-60 overflow-y-auto custom-scrollbar">
+                <button
+                  onClick={() => {
+                    setPreviewUser(null);
+                    setSwitcherOpen(false);
+                  }}
+                  className="w-full text-left px-3 py-2 hover:bg-primary/10 rounded-xl transition-all text-xs font-bold text-on-background flex items-center gap-2"
+                >
+                  <span className="material-symbols-outlined text-[16px] text-outline">admin_panel_settings</span>
+                  Admin (Elena)
+                </button>
+                {employees
+                  .filter(emp => emp.role !== 'admin')
+                  .map((emp) => (
+                    <button
+                      key={emp.id}
+                      onClick={() => {
+                        setPreviewUser(emp);
+                        setSwitcherOpen(false);
+                      }}
+                      className="w-full text-left px-3 py-2 hover:bg-primary/10 rounded-xl transition-all text-xs font-bold text-on-background flex items-center gap-2 mt-1"
+                    >
+                      <div className="w-5 h-5 rounded-full overflow-hidden border border-white flex-shrink-0">
+                        <img className="w-full h-full object-cover" src={emp.avatar} alt={emp.name} />
+                      </div>
+                      <span className="truncate">{emp.name}</span>
+                    </button>
+                  ))}
+              </div>
+            </>
+          )}
         </div>
       </header>
 
