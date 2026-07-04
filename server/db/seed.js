@@ -51,10 +51,10 @@ const insertUser = db.prepare(`
 `);
 
 const users = [
-  { employee_id: 'ADM001', email: 'admin@hrms.com',  password_hash: hash('Admin@123'),    role: 'admin' },
-  { employee_id: 'EMP001', email: 'emp1@hrms.com',   password_hash: hash('Employee@123'), role: 'employee' },
-  { employee_id: 'EMP002', email: 'emp2@hrms.com',   password_hash: hash('Employee@123'), role: 'employee' },
-  { employee_id: 'EMP003', email: 'emp3@hrms.com',   password_hash: hash('Employee@123'), role: 'employee' },
+  { employee_id: 'ADM001', email: 'sayantan05072004@gmail.com', password_hash: hash('Admin@123'),    role: 'admin' },
+  { employee_id: 'EMP001', email: 'ankushbiswas2704@gmail.com',  password_hash: hash('Employee@123'), role: 'employee' },
+  { employee_id: 'EMP002', email: 'sayatan05092004@gmail.com',   password_hash: hash('Employee@123'), role: 'employee' },
+  { employee_id: 'EMP003', email: 'sayan05072004@gmail.com',      password_hash: hash('Employee@123'), role: 'employee' },
 ];
 
 const insertUsers = db.transaction(() => {
@@ -82,8 +82,8 @@ const insertProfile = db.prepare(`
 const profileData = [
   {
     employee_id: 'ADM001',
-    first_name: 'Rajesh',
-    last_name: 'Sharma',
+    first_name: 'Riju',
+    last_name: 'Dasgupta',
     phone: '+91-9876543210',
     address: '12, MG Road, Bengaluru, Karnataka 560001',
     department: 'HR',
@@ -92,8 +92,8 @@ const profileData = [
   },
   {
     employee_id: 'EMP001',
-    first_name: 'Priya',
-    last_name: 'Patel',
+    first_name: 'Ankush',
+    last_name: 'Biswas',
     phone: '+91-9123456780',
     address: '45, Nehru Nagar, Pune, Maharashtra 411001',
     department: 'Engineering',
@@ -102,18 +102,18 @@ const profileData = [
   },
   {
     employee_id: 'EMP002',
-    first_name: 'Amit',
-    last_name: 'Verma',
+    first_name: 'Sayantan',
+    last_name: 'Dasgupta',
     phone: '+91-9988776655',
     address: '78, Sector 22, Gurugram, Haryana 122015',
-    department: 'Marketing',
-    job_title: 'Marketing Executive',
+    department: 'Design',
+    job_title: 'UI/UX Designer',
     date_of_joining: '2023-06-01',
   },
   {
     employee_id: 'EMP003',
-    first_name: 'Sneha',
-    last_name: 'Iyer',
+    first_name: 'Swastick',
+    last_name: 'Saha',
     phone: '+91-9012345678',
     address: '23, Anna Salai, Chennai, Tamil Nadu 600002',
     department: 'Finance',
