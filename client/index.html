@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PeopleHub HRMS</title>
+    
+    <!-- Google Fonts & Material Symbols -->
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+
+    <!-- Tailwind Play CDN -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    
+    <!-- Exact Tailwind Theme Configuration -->
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+              "on-primary-fixed-variant": "#004494",
+              "primary-container": "#0058bc",
+              "tertiary-container": "#b90034",
+              "outline": "#727784",
+              "background": "#f9f9ff",
+              "surface-dim": "#d4daeb",
+              "on-error-container": "#93000a",
+              "on-tertiary-fixed-variant": "#920027",
+              "on-tertiary-container": "#ffc6c7",
+              "surface-container": "#e8edff",
+              "secondary": "#8d2ebc",
+              "on-surface-variant": "#424753",
+              "primary-fixed-dim": "#adc6ff",
+              "outline-variant": "#c2c6d5",
+              "tertiary-fixed": "#ffdada",
+              "gradient-end": "#8d2ebc",
+              "on-background": "#151c28",
+              "glass-border-light": "rgba(255, 255, 255, 0.6)",
+              "on-tertiary": "#ffffff",
+              "inverse-surface": "#2a303e",
+              "gradient-start": "#0058bc",
+              "surface-container-lowest": "#ffffff",
+              "on-tertiary-fixed": "#40000c",
+              "surface": "#f9f9ff",
+              "surface-tint": "#095bbf",
+              "on-secondary-fixed": "#310048",
+              "error": "#ba1a1a",
+              "on-primary-container": "#c3d4ff",
+              "tertiary-fixed-dim": "#ffb3b5",
+              "on-secondary": "#ffffff",
+              "surface-bright": "#f9f9ff",
+              "on-primary": "#ffffff",
+              "glass-bg": "rgba(255, 255, 255, 0.4)",
+              "on-secondary-fixed-variant": "#7201a2",
+              "surface-container-low": "#f1f3ff",
+              "surface-container-highest": "#dde2f4",
+              "secondary-fixed": "#f6d9ff",
+              "on-primary-fixed": "#001a41",
+              "on-secondary-container": "#550079",
+              "surface-container-high": "#e2e8fa",
+              "on-surface": "#151c28",
+              "surface-variant": "#dde2f4",
+              "primary": "#00418f",
+              "error-container": "#ffdad6",
+              "inverse-on-surface": "#edf0ff",
+              "tertiary": "#8d0025",
+              "glass-border-dim": "rgba(255, 255, 255, 0.2)",
+              "secondary-container": "#d072ff",
+              "inverse-primary": "#adc6ff",
+              "secondary-fixed-dim": "#e9b3ff",
+              "on-error": "#ffffff",
+              "glass-bg-elevated": "rgba(255, 255, 255, 0.5)",
+              "primary-fixed": "#d8e2ff"
+            },
+            "borderRadius": {
+              "DEFAULT": "1rem",
+              "lg": "2rem",
+              "xl": "3rem",
+              "full": "9999px"
+            },
+            "spacing": {
+              "stack-sm": "8px",
+              "stack-md": "16px",
+              "gutter": "16px",
+              "container-margin": "24px",
+              "stack-lg": "32px",
+              "unit": "8px"
+            },
+            "fontFamily": {
+              "body-lg": ["Inter"],
+              "headline-lg": ["Inter"],
+              "display-lg-mobile": ["Inter"],
+              "display-lg": ["Inter"],
+              "label-md": ["Inter"],
+              "headline-md": ["Inter"],
+              "label-sm": ["Inter"],
+              "body-md": ["Inter"]
+            },
+            "fontSize": {
+              "body-lg": ["18px", {"lineHeight": "28px", "letterSpacing": "0.01em", "fontWeight": "400"}],
+              "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+              "display-lg-mobile": ["34px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+              "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+              "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+              "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+              "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.03em", "fontWeight": "500"}],
+              "body-md": ["16px", {"lineHeight": "24px", "letterSpacing": "0.01em", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+  </head>
+  <body class="bg-background text-on-background font-body-md min-h-screen overflow-x-hidden relative">
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
