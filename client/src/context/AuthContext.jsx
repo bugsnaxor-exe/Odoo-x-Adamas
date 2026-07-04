@@ -30,6 +30,12 @@ export const AuthProvider = ({ children }) => {
     setLoading(true);
     try {
       const data = await apiService.login(email, password);
+      if (data.token) {
+        localStorage.setItem('peoplehub_token', data.token);
+      }
+      if (data.user) {
+        localStorage.setItem('peoplehub_currentUser', JSON.stringify(data.user));
+      }
       setUser(data.user);
       return { success: true };
     } catch (err) {
@@ -44,6 +50,12 @@ export const AuthProvider = ({ children }) => {
     setLoading(true);
     try {
       const data = await apiService.signup(userData);
+      if (data.token) {
+        localStorage.setItem('peoplehub_token', data.token);
+      }
+      if (data.user) {
+        localStorage.setItem('peoplehub_currentUser', JSON.stringify(data.user));
+      }
       setUser(data.user);
       return { success: true };
     } catch (err) {

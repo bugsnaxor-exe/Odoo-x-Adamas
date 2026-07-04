@@ -11,17 +11,18 @@ const roleGuard = require('../middleware/roleGuard.js');
 router.use(auth);
 
 // -----------------------------------------
-// GET / — List all employees with profiles
+// GET / (and /all) — List all employees with profiles
 // Admin only
 // -----------------------------------------
-router.get('/', roleGuard('admin'), (req, res) => {
+router.get(['/', '/all'], roleGuard('admin'), (req, res) => {
   try {
     const employees = db.prepare(`
       SELECT
         u.id, u.email, u.role, u.created_at,
         p.first_name, p.last_name, p.phone, p.address,
         p.department, p.job_title, p.date_of_joining,
-        p.profile_picture
+        p.profile_picture,
+        (SELECT basic_salary FROM payroll WHERE user_id = u.id ORDER BY month DESC LIMIT 1) AS salary
       FROM users u
       LEFT JOIN profiles p ON u.id = p.user_id
     `).all();
@@ -51,7 +52,8 @@ router.get('/:id', (req, res) => {
         u.id, u.email, u.role, u.created_at,
         p.first_name, p.last_name, p.phone, p.address,
         p.department, p.job_title, p.date_of_joining,
-        p.profile_picture
+        p.profile_picture,
+        (SELECT basic_salary FROM payroll WHERE user_id = u.id ORDER BY month DESC LIMIT 1) AS salary
       FROM users u
       LEFT JOIN profiles p ON u.id = p.user_id
       WHERE u.id = ?
@@ -101,21 +103,36 @@ router.put('/:id', (req, res) => {
       }
     }
 
-    if (updates.length === 0) {
-      return res.status(400).json({ error: 'No valid fields provided for update' });
+    // Execute profiles table updates if any profile field was changed
+    if (updates.length > 0) {
+      values.push(id);
+      db.prepare(`
+        UPDATE profiles
+        SET ${updates.join(', ')}
+        WHERE user_id = ?
+      `).run(...values);
     }
 
-    // Add user_id for the WHERE clause
-    values.push(id);
+    // If salary is updated by an admin, upsert it in the payroll table for the current month
+    if (isAdmin && req.body.salary !== undefined) {
+      const basicSalary = parseFloat(req.body.salary) || 0;
+      const finalAllowances = basicSalary * 0.12;
+      const finalDeductions = basicSalary * 0.08;
+      const netSalary = basicSalary + finalAllowances - finalDeductions;
+      
+      const now = new Date();
+      const monthStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
 
-    const result = db.prepare(`
-      UPDATE profiles
-      SET ${updates.join(', ')}
-      WHERE user_id = ?
-    `).run(...values);
-
-    if (result.changes === 0) {
-      return res.status(404).json({ error: 'Profile not found' });
+      db.prepare(`
+        INSERT INTO payroll (user_id, month, basic_salary, allowances, deductions, net_salary, updated_by)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
+        ON CONFLICT(user_id, month) DO UPDATE SET
+          basic_salary = excluded.basic_salary,
+          allowances   = excluded.allowances,
+          deductions   = excluded.deductions,
+          net_salary   = excluded.net_salary,
+          updated_by   = excluded.updated_by
+      `).run(id, monthStr, basicSalary, finalAllowances, finalDeductions, netSalary, req.user.id);
     }
 
     // Return the updated profile
@@ -124,7 +141,8 @@ router.put('/:id', (req, res) => {
         u.id, u.email, u.role, u.created_at,
         p.first_name, p.last_name, p.phone, p.address,
         p.department, p.job_title, p.date_of_joining,
-        p.profile_picture
+        p.profile_picture,
+        (SELECT basic_salary FROM payroll WHERE user_id = u.id ORDER BY month DESC LIMIT 1) AS salary
       FROM users u
       LEFT JOIN profiles p ON u.id = p.user_id
       WHERE u.id = ?
